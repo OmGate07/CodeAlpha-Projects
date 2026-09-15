@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeAlpha Calculator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #1e1f26;
+    }
+
+    .calculator {
+      width: 320px;
+      background: #2a2b36;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .display {
+      background: #14151b;
+      border-radius: 10px;
+      padding: 20px 15px;
+      margin-bottom: 15px;
+      text-align: right;
+      overflow: hidden;
+      word-wrap: break-word;
+    }
+
+    .previous-operand {
+      color: #8a8d9a;
+      font-size: 1rem;
+      min-height: 20px;
+    }
+
+    .current-operand {
+      color: #ffffff;
+      font-size: 2.2rem;
+      font-weight: 500;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 10px;
+      padding: 18px 0;
+      font-size: 1.1rem;
+      cursor: pointer;
+      background: #3a3c4a;
+      color: #ffffff;
+      transition: transform 0.1s ease, background 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #4a4d5e;
+    }
+
+    .btn:active {
+      transform: scale(0.95);
+    }
+
+    .btn.operator {
+      background: #ff9f43;
+      color: #14151b;
+      font-weight: 600;
+    }
+
+    .btn.operator:hover {
+      background: #ffb066;
+    }
+
+    .btn.equals {
+      background: #00d68f;
+      color: #14151b;
+      font-weight: 700;
+      grid-row: span 2;
+    }
+
+    .btn.equals:hover {
+      background: #22e6a5;
+    }
+
+    .btn.clear,
+    .btn.delete {
+      background: #e64c66;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .btn.clear:hover,
+    .btn.delete:hover {
+      background: #f16a80;
+    }
+
+    .btn.zero {
+      grid-column: span 2;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="calculator">
+    <div class="display">
+      <div id="previous-operand" class="previous-operand"></div>
+      <div id="current-operand" class="current-operand">0</div>
+    </div>
+
+    <div class="buttons">
+      <button class="btn clear" onclick="clearAll()">AC</button>
+      <button class="btn delete" onclick="deleteLast()">DEL</button>
+      <button class="btn operator" onclick="chooseOperator('÷')">÷</button>
+      <button class="btn operator" onclick="chooseOperator('×')">×</button>
+
+      <button class="btn number" onclick="appendNumber('7')">7</button>
+      <button class="btn number" onclick="appendNumber('8')">8</button>
+      <button class="btn number" onclick="appendNumber('9')">9</button>
+      <button class="btn operator" onclick="chooseOperator('-')">−</button>
+
+      <button class="btn number" onclick="appendNumber('4')">4</button>
+      <button class="btn number" onclick="appendNumber('5')">5</button>
+      <button class="btn number" onclick="appendNumber('6')">6</button>
+      <button class="btn operator" onclick="chooseOperator('+')">+</button>
+
+      <button class="btn number" onclick="appendNumber('1')">1</button>
+      <button class="btn number" onclick="appendNumber('2')">2</button>
+      <button class="btn number" onclick="appendNumber('3')">3</button>
+      <button class="btn equals" onclick="calculate()" rowspan="2">=</button>
+
+      <button class="btn number zero" onclick="appendNumber('0')">0</button>
+      <button class="btn number" onclick="appendNumber('.')">.</button>
+    </div>
+  </div>
+
+  <script>
+    // These three variables remember the "state" of the calculator
+    let currentOperand = "0";   // what you're currently typing
+    let previousOperand = "";   // the number typed before you picked an operator
+    let operation = undefined;  // which operator (+, -, ×, ÷) was picked
+
+    // Grab the two display boxes from the HTML using their id
+    const currentOperandDisplay = document.getElementById("current-operand");
+    const previousOperandDisplay = document.getElementById("previous-operand");
+
+    // Runs when a number or "." button is clicked
+    function appendNumber(number) {
+      if (number === "." && currentOperand.includes(".")) return;
+
+      if (currentOperand === "0" && number !== ".") {
+        currentOperand = number;
+      } else {
+        currentOperand = currentOperand + number;
+      }
+      updateDisplay();
+    }
+
+    // Runs when +, -, ×, ÷ is clicked
+    function chooseOperator(op) {
+      if (currentOperand === "") return;
+
+      if (previousOperand !== "") {
+        calculate();
+      }
+
+      operation = op;
+      previousOperand = currentOperand;
+      currentOperand = "";
+      updateDisplay();
+    }
+
+    // Runs when "=" is clicked
+    function calculate() {
+      let result;
+      const prev = parseFloat(previousOperand);
+      const current = parseFloat(currentOperand);
+
+      if (isNaN(prev) || isNaN(current)) return;
+
+      switch (operation) {
+        case "+":
+          result = prev + current;
+          break;
+        case "-":
+          result = prev - current;
+          break;
+        case "×":
+          result = prev * current;
+          break;
+        case "÷":
+          if (current === 0) {
+            alert("You can't divide by zero!");
+            clearAll();
+            return;
+          }
+          result = prev / current;
+          break;
+        default:
+          return;
+      }
+
+      currentOperand = parseFloat(result.toFixed(8)).toString();
+      operation = undefined;
+      previousOperand = "";
+      updateDisplay();
+    }
+
+    // Runs when "AC" (All Clear) is clicked
+    function clearAll() {
+      currentOperand = "0";
+      previousOperand = "";
+      operation = undefined;
+      updateDisplay();
+    }
+
+    // Runs when "DEL" is clicked - removes the last typed digit
+    function deleteLast() {
+      currentOperand = currentOperand.toString().slice(0, -1);
+      if (currentOperand === "") currentOperand = "0";
+      updateDisplay();
+    }
+
+    // Updates what's shown on screen to match our variables
+    function updateDisplay() {
+      currentOperandDisplay.textContent = currentOperand;
+      if (operation != null) {
+        previousOperandDisplay.textContent = `${previousOperand} ${operation}`;
+      } else {
+        previousOperandDisplay.textContent = "";
+      }
+    }
+
+    // BONUS: Keyboard support
+    document.addEventListener("keydown", (e) => {
+      if (e.key >= "0" && e.key <= "9") appendNumber(e.key);
+      if (e.key === ".") appendNumber(".");
+      if (e.key === "+") chooseOperator("+");
+      if (e.key === "-") chooseOperator("-");
+      if (e.key === "*") chooseOperator("×");
+      if (e.key === "/") chooseOperator("÷");
+      if (e.key === "Enter" || e.key === "=") calculate();
+      if (e.key === "Backspace") deleteLast();
+      if (e.key === "Escape") clearAll();
+    });
+  </script>
+</body>
+</html>
