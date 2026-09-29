@@ -176,57 +176,14 @@ h2.section-title {
 .cert-card {
   background: var(--bg-card);
   border-radius: 12px;
-  padding: 12px;
-  text-align: center;
+  padding: 24px;
   border: 1px solid rgba(255,255,255,0.08);
-  color: var(--text-dim);
-  font-size: 0.85rem;
-  overflow: hidden;
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
-.cert-card:hover { transform: translateY(-6px) scale(1.02); border-color: var(--accent2); color: var(--text); box-shadow: 0 10px 25px rgba(44,177,255,0.25); }
-.cert-card img {
-  width: 100%;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  transition: transform 0.4s ease;
-  cursor: zoom-in;
-}
-.cert-card:hover img { transform: scale(1.06); }
-
-.lightbox {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.85);
-  z-index: 999;
-  align-items: center;
-  justify-content: center;
-  padding: 30px;
-}
-.lightbox.open { display: flex; }
-.lightbox img {
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 10px;
-  box-shadow: 0 0 40px rgba(0,0,0,0.6);
-}
-.lightbox .close-btn {
-  position: absolute;
-  top: 22px; right: 30px;
-  width: 42px; height: 42px;
-  border-radius: 50%;
-  background: var(--bg-card);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: var(--text);
-  font-size: 1.4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.lightbox .close-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+.cert-card:hover { transform: translateY(-6px); border-color: var(--accent2); box-shadow: 0 10px 25px rgba(44,177,255,0.2); }
+.cert-icon { font-size: 1.8rem; margin-bottom: 10px; }
+.cert-card h3 { color: var(--accent2); font-size: 1.05rem; margin-bottom: 6px; }
+.cert-card p { color: var(--text-dim); font-size: 0.85rem; }
 
 .contact-grid { display: flex; flex-wrap: wrap; gap: 16px; }
 .contact-card {
@@ -357,16 +314,19 @@ footer { text-align: center; padding: 25px; color: var(--text-dim); font-size: 0
     <h2 class="section-title">Certifications</h2>
     <div class="cert-grid">
       <div class="cert-card">
-        <img src="images/cert1.png" alt="Claude 101 Certificate of Completion" onclick="openLightbox(this.src)">
-        <p>Claude 101 — Certificate of Completion</p>
+        <div class="cert-icon">🎓</div>
+        <h3>Claude 101</h3>
+        <p>Certificate of Completion — Anthropic</p>
       </div>
       <div class="cert-card">
-        <img src="images/cert2.jpg" alt="SEVA Internship Completion Letter" onclick="openLightbox(this.src)">
+        <div class="cert-icon">🏢</div>
+        <h3>Skill Development Training Program</h3>
         <p>Internship Completion Letter — Seva Samajik Vikas Sanstha</p>
       </div>
       <div class="cert-card">
-        <img src="images/cert3.jpg" alt="Microsoft Excel with AI Masterclass Certificate" onclick="openLightbox(this.src)">
-        <p>Microsoft Excel with A.I Masterclass</p>
+        <div class="cert-icon">📊</div>
+        <h3>Microsoft Excel with A.I Masterclass</h3>
+        <p>Certificate of Completion — Skill Course</p>
       </div>
     </div>
   </section>
@@ -375,18 +335,13 @@ footer { text-align: center; padding: 25px; color: var(--text-dim); font-size: 0
     <h2 class="section-title">Let's Connect</h2>
     <div class="contact-grid">
       <div class="contact-card">📧 Email<br><a href="mailto:omgate07@gmail.com">omgate07@gmail.com</a></div>
-      <div class="contact-card">📞 Phone<br><a href="tel:+918600410532">+91 8600410532</a></div>
+      <div class="contact-card">📞 Phone<br><a href="tel:+918600XXXXX">+91 8600XXXXXX</a></div>
       <div class="contact-card">📍 Location<br>Phaltan</div>
       <div class="contact-card">🔗 LinkedIn<br><a href="https://www.linkedin.com/in/om-gate-1a9089390/" target="_blank">om-gate</a></div>
     </div>
   </section>
 
   <footer>&copy; 2026 Om Gate. All rights reserved.</footer>
-
-  <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
-    <div class="close-btn" onclick="closeLightbox(event)">&#10005;</div>
-    <img id="lightbox-img" src="" alt="Full size certificate">
-  </div>
 
 <script>
   document.querySelectorAll('nav a').forEach(link => {
@@ -413,19 +368,6 @@ footer { text-align: center; padding: 25px; color: var(--text-dim); font-size: 0
   }, { threshold: 0.2 });
 
   faders.forEach(el => observer.observe(el));
-
-  function openLightbox(src) {
-    document.getElementById('lightbox-img').src = src;
-    document.getElementById('lightbox').classList.add('open');
-  }
-  function closeLightbox(e) {
-    if (e.target.id === 'lightbox' || e.target.classList.contains('close-btn')) {
-      document.getElementById('lightbox').classList.remove('open');
-    }
-  }
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
-  });
 </script>
 
 </body>
