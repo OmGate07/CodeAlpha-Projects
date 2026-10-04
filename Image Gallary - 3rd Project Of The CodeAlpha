@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            text-align: center;
+            padding: 30px;
+        }
 
+        h1 {
+            color: #ffffff;
+        }
+
+        p {
+            max-width: 600px;
+            margin: 15px auto;
+            color: #b5b5b5;
+            line-height: 1.6;
+        }
+
+        img {
+            width: 350px;
+            margin: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        img:hover {
+            transform: scale(1.05);
+        }
+
+        #info-box {
+            max-width: 500px;
+            margin: 20px auto;
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>BMW</h1>
+
+    <p>
+        BMW (Bayerische Motoren Werke) is a German multinational company that
+        manufactures luxury vehicles and motorcycles. It is known for its
+        focus on performance, precision engineering, and the slogan
+        "The Ultimate Driving Machine."
+    </p>
+
+    <img src="https://t4.ftcdn.net/jpg/04/20/38/41/360_F_420384111_5fzxWlWxvB7bg5BROxfKdBbgBYB2TwGP.jpg" alt="BMW car front view" onclick="showInfo('This is a BMW sports car, known for sharp handling and a bold front grille design.')">
+
+    <img src="https://www.bmwgroup.com/en/company/_jcr_content/main/layoutcontainer_1988/columncontrol/columncontrolparsys/globalimage.coreimg.jpeg/1758537295862/720x720-i5er.jpeg" alt="BMW Group official image" onclick="showInfo('This is an official image from BMW Group, the parent company behind BMW, MINI, and Rolls-Royce.')">
+    
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2pmccrkEUr5uYNpzueVGM3TVbC2Cb9DkFsS4vvThyfaHODqvZnNjeYwqx&s=10">
+    
+    <div id="info-box"></div>
+
+    <script>
+        // runs when an image is clicked
+        function showInfo(text) {
+            const box = document.getElementById("info-box");
+            box.textContent = text;
+            box.style.display = "block";
+        }
+    </script>
+</body>
+</html>
